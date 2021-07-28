@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import "./Login.css";
 import { Auth } from "aws-amplify";
 import { useAppContext } from "../../libs/contextLib";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const { userHasAuthenticated } = useAppContext();
@@ -45,6 +46,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
+        <Link to="/login/reset">Forgot password?</Link>
         <Button block size="lg" type="submit" disabled={!validateForm()}>
           Login
         </Button>

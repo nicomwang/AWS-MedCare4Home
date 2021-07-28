@@ -6,7 +6,6 @@ import { Auth } from "aws-amplify";
 import "./App.css";
 import Routes from "./Routes";
 import { useHistory } from "react-router-dom";
-import { onError } from "./libs/errorLib";
 
 function App() {
   const history = useHistory();
@@ -30,6 +29,9 @@ function App() {
           <Nav>
             {isAuthenticated ? (
               <>
+               <LinkContainer to="/documents">
+                  <Nav.Link>Documents</Nav.Link>
+                </LinkContainer>
                 <LinkContainer to="/symptoms">
                   <Nav.Link>Symptoms</Nav.Link>
                 </LinkContainer>
