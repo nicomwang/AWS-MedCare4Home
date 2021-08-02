@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
-import { useAppContext } from "../../libs/contextLib";
-import { onError } from "../../libs/errorLib";
-import "./ListDocuments.css";
-import { API } from "aws-amplify";
-import { BsPencilSquare } from "react-icons/bs";
-import { LinkContainer } from "react-router-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { ListGroup, Row, Col, Button, Card } from 'react-bootstrap';
+import { useAppContext } from '../../libs/contextLib';
+import { onError } from '../../libs/errorLib';
+import './ListDocuments.css';
+import { API, Storage } from 'aws-amplify';
+import {
+  BsPencilSquare,
+  BsFolderSymlink,
+  BsPlus,
+  BsDownload
+} from 'react-icons/bs';
+import { LinkContainer } from 'react-router-bootstrap';
+import NewDocument from './NewDocument';
+import Documents from './Documents';
 
 export default function ListDocument() {
   const [documents, setDocuments] = useState([]);
@@ -17,70 +24,158 @@ export default function ListDocument() {
       if (!isAuthenticated) {
         return;
       }
-  
+
       try {
         const documents = await loadDocuments();
         setDocuments(documents);
       } catch (e) {
         onError(e);
       }
-  
+
       setIsLoading(false);
     }
-  
+
     onLoad();
   }, [isAuthenticated]);
-  
+
   function loadDocuments() {
-    return API.get("documents", "/documents");
+    return API.get('documents', '/documents');
   }
- 
+  function loadDocument(id) {
+    return API.get('documents', `/documents/${id}`);
+  }
+  function formatFilename(str) {
+    return str.replace(/^\w+-/, '');
+  }
   function renderDocumentsList(documents) {
     return (
       <>
-        <LinkContainer to="/documents/new">
-          <ListGroup.Item action className="py-3 text-nowrap text-truncate">
-            <BsPencilSquare size={17} />
-            <span className="ml-2 font-weight-bold">Create a new document</span>
-          </ListGroup.Item>
-        </LinkContainer>
-        {documents.map(({ documentId, fileName, createdAt }) => (
-          <LinkContainer key={documentId} to={`/documents/${documentId}`}>
-            <ListGroup.Item action>
-              <span className="font-weight-bold">
-                {fileName.trim().split("\n")[0]}
-              </span>
-              <br />
-              <span className="text-muted">
-                Created: {new Date(createdAt).toLocaleString()}
-              </span>
-            </ListGroup.Item>
-          </LinkContainer>
-        ))}
+        <Row>
+          <Col className=''>
+            <div className='row text-center'>
+              <LinkContainer className='text-center' to='/documents/new'>
+                <ListGroup.Item
+                  action
+                  className=' font-weight-bold py-auto m-4 bg-success text-white'
+                >
+                  <BsPlus size={40} />
+                  <span className='h3 my-auto'>Add Document</span>
+                </ListGroup.Item>
+              </LinkContainer>
+            </div>
+
+            <div className=' row '>
+              {documents.length === 0 ? (
+                <p className='h4 text-muted mx-auto'>There is no document</p>
+              ) : (
+                documents.map(
+                  ({ documentId, fileName, createdAt, attachment }) => (
+                    <LinkContainer
+                      key={documentId}
+                      to={`/documents/${documentId}`}
+                    >
+                      <Col className='m-4 ' md={12} xl={5}>
+                        <Card className='p-3 bg-light h-100' key={documentId}>
+                          <Card.Body className='m-4'>
+                            <Card.Title>
+                              Type:
+                              <span className='  m-3 alert alert-primary label'>
+                                {fileName}
+                              </span>
+                            </Card.Title>
+                            <Card.Text className='mt-3'>
+                              <Card.Title> Attachment: </Card.Title>
+                              <span className='h6'>
+                                {attachment ? (
+                                  <p className='m-3'>
+                                    <BsDownload size={17} />
+                                    <a
+                                      className='m-2 mt-5'
+                                      href={renderAttachmentURL(attachment)}
+                                    >
+                                      {' '}
+                                      {formatFilename(attachment)}
+                                    </a>
+                                  </p>
+                                ) : (
+                                  <span className='text-muted'>
+                                    No files found
+                                  </span>
+                                )}
+                              </span>
+                            </Card.Text>
+                          </Card.Body>
+                          <hr />
+                          <Row>
+                            <Col sm={6} xl={8}>
+                              <span className='text-muted text-small'>
+                                Created: {new Date(createdAt).toLocaleString()}
+                              </span>
+                            </Col>
+                            <Col sm={6} xl={4}>
+                              <div className=' float-right m-0'>
+                                <Button
+                                  className='btn-warning btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'
+                                  onClick={() => loadDocument(documentId)}
+                                >
+                                  <BsPencilSquare size={17} />
+                                </Button>
+
+                                {/* <Button
+                                className='btn-danger btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'
+                                onClick={(e) => deleteDocument(documentId)}
+                              >
+                                <BsTrash size={17} />
+                              </Button> */}
+                              </div>
+                            </Col>
+                          </Row>
+                        </Card>
+                      </Col>
+                    </LinkContainer>
+                  )
+                )
+              )}
+            </div>
+          </Col>
+        </Row>
       </>
     );
   }
 
   function renderLander() {
     return (
-      <div className="lander">
+      <div className='lander'>
         <h1>Home Medical Care</h1>
-        <p className="text-muted">Cloud Computing Project</p>
+        <p className='text-muted'>Cloud Computing Project</p>
       </div>
     );
   }
-
+  // function renderCreateEdit() {
+  //   const match = useRouteMatch();
+  //   return (
+  //     <div className='lander'>
+  //       <h1>Home Medical Care</h1>
+  //       <p className='text-muted'>Cloud Computing Project</p>
+  //     </div>
+  //   );
+  // }
+  function renderAttachmentURL(attchment) {
+    var URL = Storage.vault.get(attchment);
+    return URL;
+  }
   function renderDocuments() {
     return (
-      <div className="documents">
-        <h2 className="pb-3 mt-4 mb-3 border-bottom">Your Health Documents</h2>
+      <div className='documents'>
+        <span className='pb-3 m-5 h2 text-center'>Your Health Documents</span>
+        <hr />
         <ListGroup>{!isLoading && renderDocumentsList(documents)}</ListGroup>
       </div>
     );
   }
 
   return (
-    <div className="Home">
+    <div className='Home'>
       {isAuthenticated ? renderDocuments() : renderLander()}
     </div>
   );
