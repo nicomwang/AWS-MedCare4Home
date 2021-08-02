@@ -20,7 +20,6 @@ export default function Home() {
     return (
       <div className="lander">
         <h1>Welcome</h1>
-        <p className="text-muted">Nico</p>
       </div>
     );
   }

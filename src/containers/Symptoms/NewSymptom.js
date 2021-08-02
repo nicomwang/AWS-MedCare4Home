@@ -11,7 +11,7 @@ import { s3Upload } from "../../libs/awsLib";
 export default function NewSymptom() {
   const file = useRef(null);
   const history = useHistory();
-  const [symptomName, setContent] = useState("");
+  const [symptomName, setSymptomName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -27,8 +27,9 @@ export default function NewSymptom() {
   
     if (file.current && file.current.size > config.MAX_ATTACHMENT_SIZE) {
       alert(
-        `Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE /
-          1000000} MB.`
+        `Please pick a file smaller than ${
+          config.MAX_ATTACHMENT_SIZE / 1000000
+        } MB.`
       );
       return;
     }
@@ -36,7 +37,9 @@ export default function NewSymptom() {
     setIsLoading(true);
   
     try {
-      await createNote({ symptomName });
+      const attachment = file.current ? await s3Upload(file.current) : null;
+  
+      await createSymptom({ symptomName, attachment });
       history.push("/");
     } catch (e) {
       onError(e);
@@ -44,7 +47,8 @@ export default function NewSymptom() {
     }
   }
   
-  function createNote(symptom) {
+  
+  function createSymptom(symptom) {
     return API.post("symptoms", "/symptoms", {
       body: symptom
     });
@@ -54,10 +58,11 @@ export default function NewSymptom() {
     <div className="NewSymptom">
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="symptomName">
+          <Form.Label>Symptom name</Form.Label>
           <Form.Control
             value={symptomName}
-            as="textarea"
-            onChange={(e) => setContent(e.target.value)}
+            as="input"
+            onChange={(e) => setSymptomName(e.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="file">
