@@ -28,7 +28,7 @@ Amplify.configure({
         region: config.apiGateway.REGION
       },
       {
-        name: "profile",
+        name: "symptoms",
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION
       },

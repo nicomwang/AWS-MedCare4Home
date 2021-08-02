@@ -11,6 +11,7 @@ import NewDocument from "./containers/Documents/NewDocument";
 import Documents from "./containers/Documents/Documents";
 import ListDocuments from "./containers/Documents/ListDocuments";
 import Symptoms from "./containers/Symptoms/Symptoms";
+import NewSymptom from "./containers/Symptoms/NewSymptom";
 import Settings from "./containers/Settings/Settings";
 import ChangePassword from "./containers/Settings/ChangePassword";
 
@@ -47,6 +48,9 @@ export default function Routes() {
       <AuthenticatedRoute exact path="/symptoms">
         <Symptoms />
       </AuthenticatedRoute>
+      <Route exact path="/symptoms/new">
+        <NewSymptom />
+      </Route>
       {/* Finally, catch all unmatched routes */}
       <Route>
         <NotFound />
