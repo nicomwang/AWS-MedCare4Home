@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Nav, Navbar } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { AppContext } from "./libs/contextLib";
-import { Auth } from "aws-amplify";
-import "./App.css";
-import Routes from "./Routes";
-import { useHistory } from "react-router-dom";
-import { onError } from "./libs/errorLib";
-import { BiHomeHeart} from "react-icons/bi";
+import React, { useState, useEffect } from 'react';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { AppContext } from './libs/contextLib';
+import { Auth } from 'aws-amplify';
+import './App.css';
+import Routes from './Routes';
+import { useHistory } from 'react-router-dom';
+import { onError } from './libs/errorLib';
+import { BiHomeHeart } from 'react-icons/bi';
 
 function App() {
   const history = useHistory();
@@ -23,7 +23,7 @@ function App() {
       await Auth.currentSession();
       userHasAuthenticated(true);
     } catch (e) {
-      if (e !== "No current user") {
+      if (e !== 'No current user') {
         onError(e);
       }
     }
@@ -35,39 +35,46 @@ function App() {
     await Auth.signOut();
 
     userHasAuthenticated(false);
-    history.push("/login");
+    history.push('/login');
   }
 
   return (
     !isAuthenticating && (
-      <div className="App container py-3">
-        <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
-          <BiHomeHeart size={28} /><br/>
-          <Navbar.Brand href="/" className="font-weight-bold"> 
-           MedCare4Home
+      <div className='App container py-3'>
+        <Navbar collapseOnSelect bg='light' expand='md' className='mb-3'>
+          <BiHomeHeart size={28} />
+          <br />
+          <Navbar.Brand href='/' className='font-weight-bold'>
+            MedCare4Home
           </Navbar.Brand>
           <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end font-weight-bold">
+          <Navbar.Collapse className='justify-content-end font-weight-bold'>
             <Nav>
               {isAuthenticated ? (
                 <>
-                  <LinkContainer to="/documents">
+                  <LinkContainer to='/documents'>
                     <Nav.Link>Documents</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/symptoms">
+                  <LinkContainer to='/symptoms'>
                     <Nav.Link>Symptoms</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/settings">
-                    <Nav.Link>Settings</Nav.Link>
-                  </LinkContainer>
-                  <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                  <NavDropdown title='Account' id='nav-dropdown'>
+                    <LinkContainer to='/settings/password'>
+                      <NavDropdown.Item eventKey='4.1'>
+                        Change Password
+                      </NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Item onClick={handleLogout} eventKey='4.2'>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               ) : (
                 <>
-                  <LinkContainer to="/signup">
+                  <LinkContainer to='/signup'>
                     <Nav.Link>Signup</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/login">
+                  <LinkContainer to='/login'>
                     <Nav.Link>Login</Nav.Link>
                   </LinkContainer>
                 </>
