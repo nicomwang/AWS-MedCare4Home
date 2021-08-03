@@ -205,7 +205,7 @@ export default function Symptoms() {
                     <Datetime
                       value={symptomDate}
                       timeFormat={false}
-                      onChange={(e) => setSymptomDate(e.format('YYYY-MM-DD'))}
+                      onChange={(e) => setSymptomDate(e.format('MM/DD/YYYY'))}
                       inputProps={{ placeholder: 'Select Date' }}
                     />
                   </Form.Group>
