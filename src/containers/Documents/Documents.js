@@ -187,6 +187,7 @@ export default function Documents() {
                         block
                         size='lg'
                         type='submit'
+                        className='m-md-2  m-sm-2 '
                         isLoading={isLoading}
                         disabled={!validateForm()}
                       >
@@ -199,6 +200,7 @@ export default function Documents() {
                         block
                         size='lg'
                         variant='danger'
+                        className='m-md-2 m-sm-2 '
                         onClick={handleDelete}
                         isLoading={isDeleting}
                       >
