@@ -12,6 +12,7 @@ import Documents from "./containers/Documents/Documents";
 import ListDocuments from "./containers/Documents/ListDocuments";
 import Symptoms from "./containers/Symptoms/Symptoms";
 import NewSymptom from "./containers/Symptoms/NewSymptom";
+import ListSymptoms from "./containers/Symptoms/ListSymptoms";
 import Settings from "./containers/Settings/Settings";
 import ChangePassword from "./containers/Settings/ChangePassword";
 
@@ -46,10 +47,13 @@ export default function Routes() {
         <ChangePassword />
       </AuthenticatedRoute >
       <AuthenticatedRoute exact path="/symptoms">
-        <Symptoms />
+        <ListSymptoms />
       </AuthenticatedRoute>
       <AuthenticatedRoute exact path="/symptoms/new">
         <NewSymptom />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/symptoms/:id">
+        <Symptoms />
       </AuthenticatedRoute>
       {/* Finally, catch all unmatched routes */}
       <Route>

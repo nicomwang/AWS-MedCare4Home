@@ -16,7 +16,7 @@ export default function NewSymptom() {
   const [symptomName, setSymptomName] = useState("Abdominal Cramps");
   const [symptomArea, setSymptomArea] = useState("Head");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState(moment(new Date()).format("MM/DD/YYYY"));
+  const [symptomDate, setSymptomDate] = useState(moment(new Date()).format("MM/DD/YYYY"));
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -44,7 +44,7 @@ export default function NewSymptom() {
     try {
       const attachment = file.current ? await s3Upload(file.current) : null;
 
-      await createSymptom({ symptomName, attachment, date, description });
+      await createSymptom({ symptomName, symptomArea, attachment, symptomDate, description });
       setIsLoading(false);
       history.push("/symptoms");
     } catch (e) {
@@ -122,9 +122,9 @@ export default function NewSymptom() {
                 <Form.Group>
                   <Form.Label>Date</Form.Label>
                   <Datetime
-                    value={date}
+                    value={symptomDate}
                     timeFormat={false}
-                    onChange={(e) => setDate(e.format("YYYY-MM-DD"))}
+                    onChange={(e) => setSymptomDate(e.format("YYYY-MM-DD"))}
                     inputProps={{ placeholder: "Select Date" }}
                   />
                 </Form.Group>
