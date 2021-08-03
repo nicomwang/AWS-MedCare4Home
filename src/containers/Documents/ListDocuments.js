@@ -27,7 +27,11 @@ export default function ListDocument() {
 
       try {
         const documents = await loadDocuments();
-        setDocuments(documents);
+        documents.map((doc) => {
+          getAttachment(doc.attachment).then((result) => {
+            doc.attachmentURL = result;
+          });
+        });
       } catch (e) {
         onError(e);
       }
@@ -38,6 +42,13 @@ export default function ListDocument() {
     onLoad();
   }, [isAuthenticated]);
 
+  async function getAttachment(attachment) {
+    var attachmentURL;
+    await Storage.vault.get(attachment).then(function (result) {
+      attachmentURL = result;
+    });
+    return attachmentURL;
+  }
   function loadDocuments() {
     return API.get('documents', '/documents');
   }
@@ -69,49 +80,58 @@ export default function ListDocument() {
                 <p className='h4 text-muted mx-auto'>There is no document</p>
               ) : (
                 documents.map(
-                  ({ documentId, fileName, createdAt, attachment }) => (
-                    <LinkContainer
-                      key={documentId}
-                      to={`/documents/${documentId}`}
-                    >
-                      <Col className='m-4 ' md={12} xl={5}>
-                        <Card className='p-3 bg-light h-100' key={documentId}>
-                          <Card.Body className='m-4'>
-                            <Card.Title>
-                              Type:
-                              <span className='  m-3 alert alert-primary label'>
-                                {fileName}
-                              </span>
-                            </Card.Title>
-                            <Card.Text className='mt-3'>
-                              <Card.Title> Attachment: </Card.Title>
-                              <span className='h6'>
-                                {attachment ? (
-                                  <p className='m-3'>
-                                    <BsDownload size={17} />
-                                    <a
-                                      className='m-2 mt-5'
-                                      href={renderAttachmentURL(attachment)}
-                                    >
-                                      {' '}
-                                      {formatFilename(attachment)}
-                                    </a>
-                                  </p>
-                                ) : (
-                                  <span className='text-muted'>
-                                    No files found
-                                  </span>
-                                )}
-                              </span>
-                            </Card.Text>
-                          </Card.Body>
-                          <hr />
-                          <Row>
-                            <Col sm={6} xl={8}>
-                              <span className='text-muted text-small'>
-                                Created: {new Date(createdAt).toLocaleString()}
-                              </span>
-                            </Col>
+                  ({
+                    documentId,
+                    fileName,
+                    createdAt,
+                    attachment,
+                    attachmentURL
+                  }) => (
+                    // <LinkContainer
+                    //   key={documentId}
+                    //   to={`/documents/${documentId}`}
+                    // >
+
+                    <Col className='m-4 ' md={12} xl={5}>
+                      <Card className='p-3 bg-light h-100' key={documentId}>
+                        <Card.Body className='m-4'>
+                          <Card.Title>
+                            Type:
+                            {/* {attachmentURL ? attachmentURL : 'no URL'} */}
+                            <span className='  m-3 alert alert-primary label'>
+                              {fileName}
+                            </span>
+                          </Card.Title>
+                          <Card.Text className='mt-3'>
+                            <Card.Title> Attachment: </Card.Title>
+                            {attachment ? (
+                              <p className='m-3'>
+                                <BsDownload size={17} />
+                                <a
+                                  // target='_blank'
+                                  // rel='noopener noreferrer'
+                                  href={attachmentURL}
+                                >
+                                  {' '}
+                                  {formatFilename(attachment)}
+                                </a>
+                              </p>
+                            ) : (
+                              <span className='text-muted'>No files found</span>
+                            )}
+                          </Card.Text>
+                        </Card.Body>
+                        <hr />
+                        <Row>
+                          <Col sm={6} xl={8}>
+                            <span className='text-muted text-small'>
+                              Created: {new Date(createdAt).toLocaleString()}
+                            </span>
+                          </Col>
+                          <LinkContainer
+                            key={documentId}
+                            to={`/documents/${documentId}`}
+                          >
                             <Col sm={6} xl={4}>
                               <div className=' float-right m-0'>
                                 <Button
@@ -129,10 +149,10 @@ export default function ListDocument() {
                               </Button> */}
                               </div>
                             </Col>
-                          </Row>
-                        </Card>
-                      </Col>
-                    </LinkContainer>
+                          </LinkContainer>
+                        </Row>
+                      </Card>
+                    </Col>
                   )
                 )
               )}
@@ -150,19 +170,6 @@ export default function ListDocument() {
         <p className='text-muted'>Cloud Computing Project</p>
       </div>
     );
-  }
-  // function renderCreateEdit() {
-  //   const match = useRouteMatch();
-  //   return (
-  //     <div className='lander'>
-  //       <h1>Home Medical Care</h1>
-  //       <p className='text-muted'>Cloud Computing Project</p>
-  //     </div>
-  //   );
-  // }
-  function renderAttachmentURL(attchment) {
-    var URL = Storage.vault.get(attchment);
-    return URL;
   }
   function renderDocuments() {
     return (
