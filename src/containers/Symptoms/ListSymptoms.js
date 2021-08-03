@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { ListGroup, Row, Col, Button, Card } from "react-bootstrap";
 import { useAppContext } from "../../libs/contextLib";
 import { onError } from "../../libs/errorLib";
+//import "./ListSymptoms.css";
 import { API, Storage } from "aws-amplify";
 import { BsPencilSquare, BsPlus, BsDownload } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap";
 
-export default function ListDocument() {
-  const [documents, setDocuments] = useState([]);
+export default function ListSymptom() {
+  const [symptoms, setSymptoms] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,8 +19,8 @@ export default function ListDocument() {
       }
 
       try {
-        const documents = await loadDocuments();
-        setDocuments(documents);
+        const symptoms = await loadSymptoms();
+        setSymptoms(symptoms);
       } catch (e) {
         onError(e);
       }
@@ -30,59 +31,74 @@ export default function ListDocument() {
     onLoad();
   }, [isAuthenticated]);
 
-  function loadDocuments() {
-    return API.get("documents", "/documents");
+  function loadSymptoms() {
+    return API.get("symptoms", "/symptoms");
   }
-  function loadDocument(id) {
-    return API.get("documents", `/documents/${id}`);
+  function loadSymptom(id) {
+    return API.get("symptoms", `/symptoms/${id}`);
   }
   function formatFilename(str) {
     return str.replace(/^\w+-/, "");
   }
-  function renderDocumentsList(documents) {
+  function renderSymptomsList(symptoms) {
     return (
       <>
         <Row>
           <Col className="">
             <div className="row text-center">
-              <LinkContainer className="text-center" to="/documents/new">
+              <LinkContainer className="text-center" to="/symptoms/new">
                 <ListGroup.Item
                   action
                   className=" font-weight-bold py-auto m-4 bg-success text-white"
                 >
                   <BsPlus size={30} />
-                  <span className="h5 my-auto">Add Document</span>
+                  <span className="h5 my-auto">Report Symptom</span>
                 </ListGroup.Item>
               </LinkContainer>
             </div>
 
             <div className=" row ">
-              {documents.length === 0 ? (
-                <p className="h5 text-muted mx-auto">There is no document</p>
+              {symptoms.length === 0 ? (
+                <p className="h5 text-muted mx-auto">No symptoms reported</p>
               ) : (
-                documents.map(
-                  ({ documentId, fileName, note, createdAt, attachment }) => (
+                symptoms.map(
+                  ({
+                    symptomId,
+                    symptomName,
+                    symptomArea,
+                    symptomDate,
+                    description,
+                    createdAt,
+                    attachment,
+                  }) => (
                     <LinkContainer
-                      key={documentId}
-                      to={`/documents/${documentId}`}
+                      key={symptomId}
+                      to={`/symptoms/${symptomId}`}
                     >
                       <Col className="m-4 " md={11} lg={5} xl={5}>
-                        <Card className="p-3 bg-light h-100" key={documentId}>
+                        <Card className="p-3 bg-light h-100" key={symptomId}>
                           <Card.Body className="m-4">
                             <Card.Title>
-                              Type:
+                              Symptpm:
                               <span className=" h6 m-3 alert alert-primary label">
-                                {fileName}
+                                {symptomName}
                               </span>
                             </Card.Title>
-                            <Card.Title> </Card.Title>
+                            <Card.Title>
+                              Area:
+                              <span className="m-3 h6 text-muted">{symptomArea}</span>
+                            </Card.Title>
+                            <Card.Title>
+                              Date:
+                              <span className="m-3 h6 text-muted">{symptomDate}</span>
+                            </Card.Title>
                             <Card.Text className="mt-3">
-                              <Card.Title>
-                                Note:
+                            <Card.Title>
+                                Description:
                                 <span className="h6">
                                   {attachment ? (
                                     <span className=" text-muted m-3">
-                                      {note}
+                                      {description}
                                     </span>
                                   ) : (
                                     <span className="text-muted m-3">
@@ -123,17 +139,10 @@ export default function ListDocument() {
                               <div className=" float-right m-0">
                                 <Button
                                   className="btn-warning btn-small rounded-circle btn-icons btn-rounded mx-2 float-right"
-                                  onClick={() => loadDocument(documentId)}
+                                  onClick={() => loadSymptom(symptomId)}
                                 >
                                   <BsPencilSquare size={17} />
                                 </Button>
-
-                                {/* <Button
-                                className='btn-danger btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'
-                                onClick={(e) => deleteDocument(documentId)}
-                              >
-                                <BsTrash size={17} />
-                              </Button> */}
                               </div>
                             </Col>
                           </Row>
@@ -156,11 +165,11 @@ export default function ListDocument() {
   }
 
   return (
-    <div className="documents">
+    <div className="symptoms">
       <br />
-      <span className="pb-3 m-3 h2 text-center"> Your Health Documents</span>
+      <span className="pb-3 m-3 h2 text-center"> Your Health Symptoms</span>
       <hr />
-      <ListGroup>{!isLoading && renderDocumentsList(documents)}</ListGroup>
+      <ListGroup>{!isLoading && renderSymptomsList(symptoms)}</ListGroup>
     </div>
   );
 }
