@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { ListGroup, Row, Col, Button, Card } from "react-bootstrap";
 import { useAppContext } from "../../libs/contextLib";
 import { onError } from "../../libs/errorLib";
-import "./ListDocuments.css";
 import { API, Storage } from "aws-amplify";
 import { BsPencilSquare, BsPlus, BsDownload } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap";
