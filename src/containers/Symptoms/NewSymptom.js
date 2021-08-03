@@ -1,17 +1,22 @@
 import React, { useRef, useState } from "react";
-import Form from "react-bootstrap/Form";
+import { Form, Row, Col, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import LoaderButton from "../../components/LoaderButton";
 import { onError } from "../../libs/errorLib";
 import config from "../../config";
-import "./NewSymptom.css";
 import { API } from "aws-amplify";
 import { s3Upload } from "../../libs/awsLib";
+import Datetime from "react-datetime";
+import moment from "moment";
+import "react-datetime/css/react-datetime.css";
 
 export default function NewSymptom() {
   const file = useRef(null);
   const history = useHistory();
-  const [symptomName, setSymptomName] = useState("");
+  const [symptomName, setSymptomName] = useState("Abdominal Cramps");
+  const [symptomArea, setSymptomArea] = useState("Head");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState(moment(new Date()).format("MM/DD/YYYY"));
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -24,7 +29,7 @@ export default function NewSymptom() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-  
+
     if (file.current && file.current.size > config.MAX_ATTACHMENT_SIZE) {
       alert(
         `Please pick a file smaller than ${
@@ -33,53 +38,116 @@ export default function NewSymptom() {
       );
       return;
     }
-  
+
     setIsLoading(true);
-  
+
     try {
       const attachment = file.current ? await s3Upload(file.current) : null;
-  
-      await createSymptom({ symptomName, attachment });
-      history.push("/");
+
+      await createSymptom({ symptomName, attachment, date, description });
+      setIsLoading(false);
+      history.push("/symptoms");
     } catch (e) {
       onError(e);
       setIsLoading(false);
     }
   }
-  
-  
   function createSymptom(symptom) {
     return API.post("symptoms", "/symptoms", {
-      body: symptom
+      body: symptom,
     });
   }
 
   return (
-    <div className="NewSymptom">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="symptomName">
-          <Form.Label>Symptom name</Form.Label>
-          <Form.Control
-            value={symptomName}
-            as="input"
-            onChange={(e) => setSymptomName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId="file">
-          <Form.Label>Attachment</Form.Label>
-          <Form.Control onChange={handleFileChange} type="file" />
-        </Form.Group>
-        <LoaderButton
-          block
-          type="submit"
-          size="lg"
-          variant="primary"
-          isLoading={isLoading}
-          disabled={!validateForm()}
-        >
-          Create
-        </LoaderButton>
-      </Form>
+    <div className="NewSymptom mb-5">
+      <Row className=" m-4">
+        <Col xl={2} />
+        <Col xl={8}>
+          <Card>
+            <Card.Header>
+              <Card.Title>Report Symptom</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="symptomName">
+                  <Form.Label>Symptoms Name</Form.Label>
+                  <Form.Control
+                    value={symptomName}
+                    as="select"
+                    onChange={(e) => setSymptomName(e.target.value)}
+                  >
+                    <option value="Abdominal Cramps">Abdominal Cramps</option>
+                    <option value="Acne">Acne</option>
+                    <option value="Appetite Changes">Appetite Changes</option>
+                    <option value="Bladder Incontinence">
+                      Bladder Incontinence
+                    </option>
+                    <option value="Bruising">Bruising</option>
+                    <option value="Chill">Chill </option>
+                    <option value="Depression">Depression</option>
+                    <option value="Diarrhoea">Diarrhoea</option>
+                    <option value="Fatigue">Fatigue</option>
+                    <option value="Nausea">Nausea</option>
+                    <option value="Skin Rash">Skin Rash </option>
+                    <option value="Vomiting">Vomiting</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="symptomArea">
+                  <Form.Label>Which Part of your body?</Form.Label>
+                  <Form.Control
+                    value={symptomArea}
+                    list="data"
+                    as="select"
+                    onChange={(e) => setSymptomArea(e.target.value)}
+                  >
+                    <option value="Head">Head</option>
+                    <option value="Neck">Neck</option>
+                    <option value="Back">Back</option>
+                    <option value="Muscle">Muscle </option>
+                    <option value="Stomach">Stomach</option>
+                    <option value="Legs">Legs </option>
+                    <option value="Arms">Arms</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control
+                    value={description}
+                    as="textarea"
+                    rows="3"
+                    placeholder="describe your symptom..."
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Date</Form.Label>
+                  <Datetime
+                    value={date}
+                    timeFormat={false}
+                    onChange={(e) => setDate(e.format("YYYY-MM-DD"))}
+                    inputProps={{ placeholder: "Select Date" }}
+                  />
+                </Form.Group>
+                <Form.Group controlId="file">
+                  <Form.Label>Attachment</Form.Label>
+                  <Form.Control onChange={handleFileChange} type="file" />
+                </Form.Group>
+                <LoaderButton
+                  block
+                  type="submit"
+                  size="lg"
+                  variant="primary"
+                  isLoading={isLoading}
+                  disabled={!validateForm()}
+                >
+                  Create
+                </LoaderButton>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col xl={2} />
+      </Row>
     </div>
   );
 }

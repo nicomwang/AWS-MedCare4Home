@@ -32,7 +32,6 @@ export default function Documents() {
         if (attachment) {
           document.attachmentURL = await Storage.vault.get(attachment);
         }
-
         setFileName(fileName);
         setDocument(document);
         setNote(note);
@@ -113,7 +112,7 @@ export default function Documents() {
 
     try {
       await deleteDocument();
-      history.push('/');
+      history.push('/documents');
     } catch (e) {
       onError(e);
       setIsDeleting(false);

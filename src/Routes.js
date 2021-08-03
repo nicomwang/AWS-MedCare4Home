@@ -48,9 +48,9 @@ export default function Routes() {
       <AuthenticatedRoute exact path="/symptoms">
         <Symptoms />
       </AuthenticatedRoute>
-      <Route exact path="/symptoms/new">
+      <AuthenticatedRoute exact path="/symptoms/new">
         <NewSymptom />
-      </Route>
+      </AuthenticatedRoute>
       {/* Finally, catch all unmatched routes */}
       <Route>
         <NotFound />

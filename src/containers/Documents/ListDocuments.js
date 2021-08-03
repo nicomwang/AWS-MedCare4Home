@@ -4,15 +4,8 @@ import { useAppContext } from '../../libs/contextLib';
 import { onError } from '../../libs/errorLib';
 import './ListDocuments.css';
 import { API, Storage } from 'aws-amplify';
-import {
-  BsPencilSquare,
-  BsFolderSymlink,
-  BsPlus,
-  BsDownload
-} from 'react-icons/bs';
+import { BsPencilSquare, BsPlus, BsDownload } from 'react-icons/bs';
 import { LinkContainer } from 'react-router-bootstrap';
-import NewDocument from './NewDocument';
-import Documents from './Documents';
 
 export default function ListDocument() {
   const [documents, setDocuments] = useState([]);
@@ -32,6 +25,7 @@ export default function ListDocument() {
             doc.attachmentURL = result;
           });
         });
+        setDocuments(documents);
       } catch (e) {
         onError(e);
       }
@@ -69,15 +63,15 @@ export default function ListDocument() {
                   action
                   className=' font-weight-bold py-auto m-4 bg-success text-white'
                 >
-                  <BsPlus size={40} />
-                  <span className='h3 my-auto'>Add Document</span>
+                  <BsPlus size={30} />
+                  <span className='h5 my-auto'>Add Document</span>
                 </ListGroup.Item>
               </LinkContainer>
             </div>
 
             <div className=' row '>
               {documents.length === 0 ? (
-                <p className='h4 text-muted mx-auto'>There is no document</p>
+                <p className='h5 text-muted mx-auto'>There is no document</p>
               ) : (
                 documents.map(
                   ({
@@ -182,8 +176,11 @@ export default function ListDocument() {
   }
 
   return (
-    <div className='Home'>
-      {isAuthenticated ? renderDocuments() : renderLander()}
+    <div className='documents'>
+      <br />
+      <span className='pb-3 m-3 h2 text-center'> Your Health Documents</span>
+      <hr />
+      <ListGroup>{!isLoading && renderDocumentsList(documents)}</ListGroup>
     </div>
   );
 }

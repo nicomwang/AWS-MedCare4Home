@@ -79,7 +79,7 @@ export default function NewDocument() {
                     <option value='Medication Presciption'>
                       Medication Presciption
                     </option>
-                    <option value='Insurance'>Insurance</option>
+                    <option value='Insurance'>Insurance Card</option>
                     <option value='Immunization Record'>
                       Immunization Record
                     </option>
