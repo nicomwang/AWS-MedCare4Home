@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { ListGroup, Row, Col, Button, Card } from "react-bootstrap";
-import { useAppContext } from "../../libs/contextLib";
-import { onError } from "../../libs/errorLib";
-import { API, Storage } from "aws-amplify";
-import { BsPencilSquare, BsPlus, BsDownload } from "react-icons/bs";
-import { LinkContainer } from "react-router-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { ListGroup, Row, Col, Button, Card } from 'react-bootstrap';
+import { useAppContext } from '../../libs/contextLib';
+import { onError } from '../../libs/errorLib';
+import { API, Storage } from 'aws-amplify';
+import { BsPencilSquare, BsPlus, BsDownload } from 'react-icons/bs';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export default function ListDocument() {
   const [documents, setDocuments] = useState([]);
@@ -31,34 +31,34 @@ export default function ListDocument() {
   }, [isAuthenticated]);
 
   function loadDocuments() {
-    return API.get("documents", "/documents");
+    return API.get('documents', '/documents');
   }
   function loadDocument(id) {
-    return API.get("documents", `/documents/${id}`);
+    return API.get('documents', `/documents/${id}`);
   }
   function formatFilename(str) {
-    return str.replace(/^\w+-/, "");
+    return str.replace(/^\w+-/, '');
   }
   function renderDocumentsList(documents) {
     return (
       <>
         <Row>
-          <Col className="">
-            <div className="row text-center">
-              <LinkContainer className="text-center" to="/documents/new">
+          <Col className=''>
+            <div className='row text-center'>
+              <LinkContainer className='text-center' to='/documents/new'>
                 <ListGroup.Item
                   action
-                  className=" font-weight-bold py-auto m-4 bg-success text-white"
+                  className=' font-weight-bold py-auto m-4 bg-success text-white'
                 >
                   <BsPlus size={30} />
-                  <span className="h5 my-auto">Add Document</span>
+                  <span className='h5 my-auto'>Add Document</span>
                 </ListGroup.Item>
               </LinkContainer>
             </div>
 
-            <div className=" row ">
+            <div className=' row '>
               {documents.length === 0 ? (
-                <p className="h5 text-muted mx-auto">There is no document</p>
+                <p className='h5 text-muted mx-auto'>There is no document</p>
               ) : (
                 documents.map(
                   ({ documentId, fileName, note, createdAt, attachment }) => (
@@ -66,46 +66,44 @@ export default function ListDocument() {
                       key={documentId}
                       to={`/documents/${documentId}`}
                     >
-                      <Col className="m-4 " md={11} lg={5} xl={5}>
-                        <Card className="p-3 bg-light h-100" key={documentId}>
-                          <Card.Body className="m-4">
+                      <Col className='' md={12} lg={6} xl={6}>
+                        <Card className='p-3 m-2 bg-light' key={documentId}>
+                          <Card.Body className=''>
                             <Card.Title>
                               Type:
-                              <span className=" h6 m-3 alert alert-primary label">
+                              <span className=' h6 m-3 alert alert-primary label'>
                                 {fileName}
                               </span>
                             </Card.Title>
                             <Card.Title> </Card.Title>
-                            <Card.Text className="mt-3">
+                            <Card.Text className='mt-3'>
                               <Card.Title>
                                 Note:
-                                <span className="h6">
+                                <span className='h6'>
                                   {attachment ? (
-                                    <span className=" text-muted m-3">
+                                    <span className=' text-muted m-3'>
                                       {note}
                                     </span>
                                   ) : (
-                                    <span className="text-muted m-3">
-                                      N/A
-                                    </span>
+                                    <span className='text-muted m-3'>N/A</span>
                                   )}
                                 </span>
                               </Card.Title>
                               <Card.Title> Attachment: </Card.Title>
-                              <span className="h6">
+                              <span className='h6'>
                                 {attachment ? (
-                                  <p className="m-3">
+                                  <p className='m-3'>
                                     <BsDownload size={17} />
                                     <a
-                                      className="m-2 mt-5"
+                                      className='m-2 mt-5'
                                       href={renderAttachmentURL(attachment)}
                                     >
-                                      {" "}
+                                      {' '}
                                       {formatFilename(attachment)}
                                     </a>
                                   </p>
                                 ) : (
-                                  <span className="text-muted">
+                                  <span className='text-muted'>
                                     No files found
                                   </span>
                                 )}
@@ -115,14 +113,14 @@ export default function ListDocument() {
                           <hr />
                           <Row>
                             <Col sm={6} xl={8}>
-                              <span className="text-muted text-small">
+                              <span className='text-muted text-small'>
                                 Created: {new Date(createdAt).toLocaleString()}
                               </span>
                             </Col>
                             <Col sm={6} xl={4}>
-                              <div className=" float-right m-0">
+                              <div className=' float-right m-0'>
                                 <Button
-                                  className="btn-warning btn-small rounded-circle btn-icons btn-rounded mx-2 float-right"
+                                  className='btn-warning btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'
                                   onClick={() => loadDocument(documentId)}
                                 >
                                   <BsPencilSquare size={17} />
@@ -149,9 +147,9 @@ export default function ListDocument() {
   }
 
   return (
-    <div className="documents">
+    <div className='documents'>
       <br />
-      <span className="pb-3 m-3 h2 text-center"> Your Health Documents</span>
+      <span className='pb-3 m-3 h2 text-center'> Your Health Documents</span>
       <hr />
       <ListGroup>{!isLoading && renderDocumentsList(documents)}</ListGroup>
     </div>

@@ -174,7 +174,11 @@ export default function Documents() {
                         </a>
                       </p>
                     )}
-                    <Form.Control onChange={handleFileChange} type='file' />
+                    <Form.Control
+                      onChange={handleFileChange}
+                      required
+                      type='file'
+                    />
                   </Form.Group>
                   <hr />
                   <Row className='mt-3'>

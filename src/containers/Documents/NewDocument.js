@@ -98,7 +98,11 @@ export default function NewDocument() {
                 </Form.Group>
                 <Form.Group controlId='file'>
                   <Form.Label>Attachment</Form.Label>
-                  <Form.Control onChange={handleFileChange} type='file' />
+                  <Form.Control
+                    onChange={handleFileChange}
+                    required
+                    type='file'
+                  />
                 </Form.Group>
                 <LoaderButton
                   block
