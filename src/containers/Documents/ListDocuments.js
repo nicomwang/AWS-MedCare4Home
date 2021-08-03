@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { ListGroup, Row, Col, Button, Card } from 'react-bootstrap';
-import { useAppContext } from '../../libs/contextLib';
-import { onError } from '../../libs/errorLib';
-import './ListDocuments.css';
-import { API, Storage } from 'aws-amplify';
-import { BsPencilSquare, BsPlus, BsDownload } from 'react-icons/bs';
-import { LinkContainer } from 'react-router-bootstrap';
+import React, { useState, useEffect } from "react";
+import { ListGroup, Row, Col, Button, Card } from "react-bootstrap";
+import { useAppContext } from "../../libs/contextLib";
+import { onError } from "../../libs/errorLib";
+import { API, Storage } from "aws-amplify";
+import { BsPencilSquare, BsPlus, BsDownload } from "react-icons/bs";
+import { LinkContainer } from "react-router-bootstrap";
 
 export default function ListDocument() {
   const [documents, setDocuments] = useState([]);
@@ -20,11 +19,6 @@ export default function ListDocument() {
 
       try {
         const documents = await loadDocuments();
-        documents.map((doc) => {
-          getAttachment(doc.attachment).then((result) => {
-            doc.attachmentURL = result;
-          });
-        });
         setDocuments(documents);
       } catch (e) {
         onError(e);
@@ -36,117 +30,109 @@ export default function ListDocument() {
     onLoad();
   }, [isAuthenticated]);
 
-  async function getAttachment(attachment) {
-    var attachmentURL;
-    await Storage.vault.get(attachment).then(function (result) {
-      attachmentURL = result;
-    });
-    return attachmentURL;
-  }
   function loadDocuments() {
-    return API.get('documents', '/documents');
+    return API.get("documents", "/documents");
   }
   function loadDocument(id) {
-    return API.get('documents', `/documents/${id}`);
+    return API.get("documents", `/documents/${id}`);
   }
   function formatFilename(str) {
-    return str.replace(/^\w+-/, '');
+    return str.replace(/^\w+-/, "");
   }
   function renderDocumentsList(documents) {
     return (
       <>
         <Row>
-          <Col className=''>
-            <div className='row text-center'>
-              <LinkContainer className='text-center' to='/documents/new'>
+          <Col className="">
+            <div className="row text-center">
+              <LinkContainer className="text-center" to="/documents/new">
                 <ListGroup.Item
                   action
-                  className=' font-weight-bold py-auto m-4 bg-success text-white'
+                  className=" font-weight-bold py-auto m-4 bg-success text-white"
                 >
                   <BsPlus size={30} />
-                  <span className='h5 my-auto'>Add Document</span>
+                  <span className="h5 my-auto">Add Document</span>
                 </ListGroup.Item>
               </LinkContainer>
             </div>
 
-            <div className=' row '>
+            <div className=" row ">
               {documents.length === 0 ? (
-                <p className='h5 text-muted mx-auto'>There is no document</p>
+                <p className="h5 text-muted mx-auto">There is no document</p>
               ) : (
                 documents.map(
-                  ({
-                    documentId,
-                    fileName,
-                    createdAt,
-                    attachment,
-                    attachmentURL
-                  }) => (
-                    // <LinkContainer
-                    //   key={documentId}
-                    //   to={`/documents/${documentId}`}
-                    // >
-
-                    <Col className='m-4 ' md={12} xl={5}>
-                      <Card className='p-3 bg-light h-100' key={documentId}>
-                        <Card.Body className='m-4'>
-                          <Card.Title>
-                            Type:
-                            {/* {attachmentURL ? attachmentURL : 'no URL'} */}
-                            <span className='  m-3 alert alert-primary label'>
-                              {fileName}
-                            </span>
-                          </Card.Title>
-                          <Card.Text className='mt-3'>
-                            <Card.Title> Attachment: </Card.Title>
-                            {attachment ? (
-                              <p className='m-3'>
-                                <BsDownload size={17} />
-                                <a
-                                  // target='_blank'
-                                  // rel='noopener noreferrer'
-                                  href={attachmentURL}
-                                >
-                                  {' '}
-                                  {formatFilename(attachment)}
-                                </a>
-                              </p>
-                            ) : (
-                              <span className='text-muted'>No files found</span>
-                            )}
-                          </Card.Text>
-                        </Card.Body>
-                        <hr />
-                        <Row>
-                          <Col sm={6} xl={8}>
-                            <span className='text-muted text-small'>
-                              Created: {new Date(createdAt).toLocaleString()}
-                            </span>
-                          </Col>
-                          <LinkContainer
-                            key={documentId}
-                            to={`/documents/${documentId}`}
-                          >
+                  ({ documentId, fileName, note, createdAt, attachment }) => (
+                    <LinkContainer
+                      key={documentId}
+                      to={`/documents/${documentId}`}
+                    >
+                      <Col className="m-4 " md={11} lg={5} xl={5}>
+                        <Card className="p-3 bg-light h-100" key={documentId}>
+                          <Card.Body className="m-4">
+                            <Card.Title>
+                              Type:
+                              <span className=" h6 m-3 alert alert-primary label">
+                                {fileName}
+                              </span>
+                            </Card.Title>
+                            <Card.Title> </Card.Title>
+                            <Card.Text className="mt-3">
+                              <Card.Title>
+                                Note:
+                                <span className="h6">
+                                  {attachment ? (
+                                    <span className=" text-muted m-3">
+                                      {note}
+                                    </span>
+                                  ) : (
+                                    <span className="text-muted m-3">
+                                      N/A
+                                    </span>
+                                  )}
+                                </span>
+                              </Card.Title>
+                              <Card.Title> Attachment: </Card.Title>
+                              <span className="h6">
+                                {attachment ? (
+                                  <p className="m-3">
+                                    <BsDownload size={17} />
+                                    <a
+                                      className="m-2 mt-5"
+                                      href={renderAttachmentURL(attachment)}
+                                    >
+                                      {" "}
+                                      {formatFilename(attachment)}
+                                    </a>
+                                  </p>
+                                ) : (
+                                  <span className="text-muted">
+                                    No files found
+                                  </span>
+                                )}
+                              </span>
+                            </Card.Text>
+                          </Card.Body>
+                          <hr />
+                          <Row>
+                            <Col sm={6} xl={8}>
+                              <span className="text-muted text-small">
+                                Created: {new Date(createdAt).toLocaleString()}
+                              </span>
+                            </Col>
                             <Col sm={6} xl={4}>
-                              <div className=' float-right m-0'>
+                              <div className=" float-right m-0">
                                 <Button
-                                  className='btn-warning btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'
+                                  className="btn-warning btn-small rounded-circle btn-icons btn-rounded mx-2 float-right"
                                   onClick={() => loadDocument(documentId)}
                                 >
                                   <BsPencilSquare size={17} />
                                 </Button>
-
-                                {/* <Button
-                                className='btn-danger btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'
-                                onClick={(e) => deleteDocument(documentId)}
-                              >
-                                <BsTrash size={17} />
-                              </Button> */}
                               </div>
                             </Col>
-                          </LinkContainer>
-                        </Row>
-                      </Card>
-                    </Col>
+                          </Row>
+                        </Card>
+                      </Col>
+                    </LinkContainer>
                   )
                 )
               )}
@@ -157,28 +143,15 @@ export default function ListDocument() {
     );
   }
 
-  function renderLander() {
-    return (
-      <div className='lander'>
-        <h1>Home Medical Care</h1>
-        <p className='text-muted'>Cloud Computing Project</p>
-      </div>
-    );
-  }
-  function renderDocuments() {
-    return (
-      <div className='documents'>
-        <span className='pb-3 m-5 h2 text-center'>Your Health Documents</span>
-        <hr />
-        <ListGroup>{!isLoading && renderDocumentsList(documents)}</ListGroup>
-      </div>
-    );
+  function renderAttachmentURL(attchment) {
+    var URL = Storage.vault.get(attchment);
+    return URL;
   }
 
   return (
-    <div className='documents'>
+    <div className="documents">
       <br />
-      <span className='pb-3 m-3 h2 text-center'> Your Health Documents</span>
+      <span className="pb-3 m-3 h2 text-center"> Your Health Documents</span>
       <hr />
       <ListGroup>{!isLoading && renderDocumentsList(documents)}</ListGroup>
     </div>
