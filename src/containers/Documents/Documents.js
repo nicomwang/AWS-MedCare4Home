@@ -6,8 +6,8 @@ import { Form, Card, Row, Col } from 'react-bootstrap';
 import LoaderButton from '../../components/LoaderButton';
 import config from '../../config';
 import { BsPencilSquare, BsTrash, BsPlus, BsDownload } from 'react-icons/bs';
-import './Documents.css';
 import { s3Upload } from '../../libs/awsLib';
+
 
 export default function Documents() {
   const file = useRef(null);
@@ -84,6 +84,7 @@ export default function Documents() {
 
       await saveDocument({
         fileName,
+        note,
         attachment: attachment || document.attachment
       });
       history.push('/documents');
@@ -176,7 +177,6 @@ export default function Documents() {
                     )}
                     <Form.Control
                       onChange={handleFileChange}
-                      required
                       type='file'
                     />
                   </Form.Group>

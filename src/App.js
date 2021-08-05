@@ -35,16 +35,16 @@ function App() {
     await Auth.signOut();
 
     userHasAuthenticated(false);
-    history.push('/login');
+    history.push('/');
   }
 
   return (
     !isAuthenticating && (
       <div className='App container py-3'>
-        <Navbar collapseOnSelect bg='light' expand='md' className='mb-3'>
-          <BiHomeHeart size={28} />
+        <Navbar collapseOnSelect expand='md' className='mb-3'>
+          <BiHomeHeart size={40} className='mr-2'/>
           <br />
-          <Navbar.Brand href='/' className='font-weight-bold'>
+          <Navbar.Brand href='/' className='font-weight-bold' >
             MedCare4Home
           </Navbar.Brand>
           <Navbar.Toggle />

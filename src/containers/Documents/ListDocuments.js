@@ -5,6 +5,7 @@ import { onError } from '../../libs/errorLib';
 import { API, Storage } from 'aws-amplify';
 import { BsPencilSquare, BsPlus, BsDownload } from 'react-icons/bs';
 import { LinkContainer } from 'react-router-bootstrap';
+import "./ListDocument.css";
 
 export default function ListDocument() {
   const [documents, setDocuments] = useState([]);
@@ -50,7 +51,7 @@ export default function ListDocument() {
                   action
                   className=' font-weight-bold py-auto m-4 bg-success text-white'
                 >
-                  <BsPlus size={30} />
+                  <BsPlus size={27} className="icon" />
                   <span className='h5 my-auto'>Add Document</span>
                 </ListGroup.Item>
               </LinkContainer>
@@ -80,7 +81,7 @@ export default function ListDocument() {
                               <Card.Title>
                                 Note:
                                 <span className='h6'>
-                                  {attachment ? (
+                                  {note ? (
                                     <span className=' text-muted m-3'>
                                       {note}
                                     </span>
@@ -93,7 +94,7 @@ export default function ListDocument() {
                               <span className='h6'>
                                 {attachment ? (
                                   <p className='m-3'>
-                                    <BsDownload size={17} />
+                                    <BsDownload size={17} className="icon" />
                                     <a
                                       className='m-2 mt-5'
                                       href={renderAttachmentURL(attachment)}
@@ -123,7 +124,7 @@ export default function ListDocument() {
                                   className='btn-warning btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'
                                   onClick={() => loadDocument(documentId)}
                                 >
-                                  <BsPencilSquare size={17} />
+                                  <BsPencilSquare size={18} />
                                 </Button>
                               </div>
                             </Col>

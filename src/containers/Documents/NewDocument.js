@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import LoaderButton from '../../components/LoaderButton';
 import { onError } from '../../libs/errorLib';
 import config from '../../config';
-import './NewDocument.css';
 import { API } from 'aws-amplify';
 import { s3Upload } from '../../libs/awsLib';
 
