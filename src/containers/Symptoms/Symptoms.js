@@ -6,10 +6,11 @@ import { Form, Card, Row, Col } from 'react-bootstrap';
 import LoaderButton from '../../components/LoaderButton';
 import config from '../../config';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs';
-import './Symptoms.css';
+// import './Symptoms.css';
 import { s3Upload } from '../../libs/awsLib';
 import Datetime from 'react-datetime';
 import moment from 'moment';
+import Rating from 'react-rating';
 import 'react-datetime/css/react-datetime.css';
 
 export default function Symptoms() {
@@ -20,12 +21,20 @@ export default function Symptoms() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [symptom, setSymptom] = useState(null);
   const [symptomName, setSymptomName] = useState('');
+  const [painLevel, setPainLevel] = useState(1);
   const [symptomArea, setSymptomArea] = useState('');
   const [description, setDescription] = useState('');
   const [symptomDate, setSymptomDate] = useState(
     moment(new Date()).format('MM/DD/YYYY')
   );
-
+  const painLevelRate = [
+    'No Pain',
+    'Mild',
+    'Moderate',
+    'Severe',
+    'Very Severe',
+    'Worst Pain Possile'
+  ];
   useEffect(() => {
     function loadSymptom() {
       return API.get('symptoms', `/symptoms/${id}`);
@@ -38,6 +47,7 @@ export default function Symptoms() {
           symptomName,
           symptomArea,
           symptomDate,
+          painLevel,
           attachment,
           description
         } = symptom;
@@ -48,9 +58,11 @@ export default function Symptoms() {
 
         setSymptomName(symptomName);
         setSymptomArea(symptomArea);
-        setSymptom(symptom);
+
+        setPainLevel(painLevel);
         setSymptomDate(symptomDate);
         setDescription(description);
+        setSymptom(symptom);
       } catch (e) {
         onError(e);
       }
@@ -60,7 +72,7 @@ export default function Symptoms() {
   }, [id]);
 
   function validateForm() {
-    return symptomName.length > 0;
+    return symptomName ? symptomName.length > 0 : false;
   }
 
   function formatFilename(str) {
@@ -97,12 +109,12 @@ export default function Symptoms() {
       if (file.current) {
         attachment = await s3Upload(file.current);
       }
-
       await saveSymptom({
         symptomName,
         symptomArea,
         symptomDate,
         description,
+        painLevel,
         attachment: attachment || symptom.attachment
       });
       history.push('/symptoms');
@@ -189,6 +201,35 @@ export default function Symptoms() {
                       <option value='Legs'>Legs </option>
                       <option value='Arms'>Arms</option>
                     </Form.Control>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Pain Level</Form.Label>
+                    <span className='m-3'>
+                      <Rating
+                        stop={6}
+                        initialRating={painLevel}
+                        emptySymbol={
+                          <span className='theme-bar-movie'>
+                            <span />
+                          </span>
+                        }
+                        fullSymbol={
+                          <span className='theme-bar-movie'>
+                            <span className='theme-bar-movie-active' />
+                          </span>
+                        }
+                        onChange={(rate) => setPainLevel(rate)}
+                        onHover={(rate) =>
+                          (document.getElementById('pain-rating').innerHTML =
+                            painLevelRate[rate - 1] ||
+                            painLevelRate[painLevel - 1])
+                        }
+                      />
+                    </span>
+                    <span id='pain-rating' className='text-primary'>
+                      {' '}
+                      {painLevelRate[painLevel - 1]}
+                    </span>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Description</Form.Label>

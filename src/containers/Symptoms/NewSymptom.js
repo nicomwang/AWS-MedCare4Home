@@ -8,6 +8,7 @@ import { API } from 'aws-amplify';
 import { s3Upload } from '../../libs/awsLib';
 import Datetime from 'react-datetime';
 import moment from 'moment';
+import Rating from 'react-rating';
 import 'react-datetime/css/react-datetime.css';
 
 export default function NewSymptom() {
@@ -19,8 +20,16 @@ export default function NewSymptom() {
   const [symptomDate, setSymptomDate] = useState(
     moment(new Date()).format('MM/DD/YYYY')
   );
+  const [painLevel, setPainLevel] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-
+  const painLevelRate = [
+    'No Pain',
+    'Mild',
+    'Moderate',
+    'Severe',
+    'Very Severe',
+    'Worst Pain Possile'
+  ];
   function validateForm() {
     return symptomName.length > 0;
   }
@@ -50,6 +59,7 @@ export default function NewSymptom() {
         symptomName,
         symptomArea,
         attachment,
+        painLevel,
         symptomDate,
         description
       });
@@ -116,6 +126,35 @@ export default function NewSymptom() {
                     <option value='Legs'>Legs </option>
                     <option value='Arms'>Arms</option>
                   </Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Pain Level</Form.Label>
+                  <span className='m-3'>
+                    <Rating
+                      stop={6}
+                      initialRating={painLevel}
+                      emptySymbol={
+                        <span className='theme-bar-movie'>
+                          <span />
+                        </span>
+                      }
+                      fullSymbol={
+                        <span className='theme-bar-movie'>
+                          <span className='theme-bar-movie-active' />
+                        </span>
+                      }
+                      onChange={(rate) => setPainLevel(rate)}
+                      onHover={(rate) =>
+                        (document.getElementById('pain-rating').innerHTML =
+                          painLevelRate[rate - 1] ||
+                          painLevelRate[painLevel - 1])
+                      }
+                    />
+                  </span>
+                  <span id='pain-rating' className=' text-primary'>
+                    {' '}
+                    {painLevelRate[painLevel - 1]}
+                  </span>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Description</Form.Label>
