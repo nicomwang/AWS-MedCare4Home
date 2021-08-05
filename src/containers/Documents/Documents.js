@@ -5,7 +5,7 @@ import { onError } from '../../libs/errorLib';
 import { Form, Card, Row, Col } from 'react-bootstrap';
 import LoaderButton from '../../components/LoaderButton';
 import config from '../../config';
-import { BsPencilSquare, BsTrash, BsPlus, BsDownload } from 'react-icons/bs';
+import { BsPencilSquare, BsTrash } from 'react-icons/bs';
 import { s3Upload } from '../../libs/awsLib';
 
 

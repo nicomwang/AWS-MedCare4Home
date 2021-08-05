@@ -5,7 +5,6 @@ import { onError } from '../../libs/errorLib';
 import { API, Storage } from 'aws-amplify';
 import { BsPencilSquare, BsPlus, BsDownload } from 'react-icons/bs';
 import { LinkContainer } from 'react-router-bootstrap';
-import "./ListDocument.css";
 
 export default function ListDocument() {
   const [documents, setDocuments] = useState([]);
@@ -46,13 +45,13 @@ export default function ListDocument() {
         <Row>
           <Col className=''>
             <div className='row text-center'>
-              <LinkContainer className='text-center' to='/documents/new'>
+              <LinkContainer className='text-center theme-color-primary' to='/documents/new'>
                 <ListGroup.Item
                   action
-                  className=' font-weight-bold py-auto m-4 bg-success text-white'
+                  className=' font-weight-bold py-auto m-4 text-white'
                 >
                   <BsPlus size={27} className="icon" />
-                  <span className='h5 my-auto'>Add Document</span>
+                  <span className='h5'>Add Document</span>
                 </ListGroup.Item>
               </LinkContainer>
             </div>

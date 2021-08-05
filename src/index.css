@@ -26,3 +26,16 @@ input[type=file] {
 h1, h2, h3, h4, h5, h6 {
   font-family: "PT Serif", serif;
 }
+
+.theme-color-primary{
+  background-color:#6091ab !important;
+  border-color: #6091ab !important;
+}
+
+.rounded-circle {
+  height: 43px;
+}
+
+.icon {
+  vertical-align: center !important;
+}

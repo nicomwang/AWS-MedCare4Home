@@ -7,12 +7,10 @@ import {
   Card,
   Button,
   Popover,
-  OverlayTrigger,
-  Tooltip
+  OverlayTrigger
 } from 'react-bootstrap';
 import { useAppContext } from '../../libs/contextLib';
 import { onError } from '../../libs/errorLib';
-
 import { API, Storage } from 'aws-amplify';
 import { BsPencilSquare, BsPlus, BsList, BsDownload } from 'react-icons/bs';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -78,7 +76,7 @@ export default function ListSymptom() {
           {description ? (
             <span className=' h6 label m-2'>{description}</span>
           ) : (
-            <span className=' h6 label m-2 text-muted'>No description</span>
+            <span className=' h6 label m-2 text-muted'>N/A</span>
           )}
         </p>
         <p>
@@ -111,13 +109,13 @@ export default function ListSymptom() {
                   <Card.Header>
                     <Card.Title>
                       Symptom List
-                      <LinkContainer className='text-center' to='/symptoms/new'>
+                      <LinkContainer className='text-center theme-color-primary' to='/symptoms/new'>
                         <Button
                           action
-                          className=' font-weight-bold btn  btn-primary ml-4 float-right'
+                          className=' font-weight-bold btn ml-4 float-right'
                         >
-                          <BsPlus className='icon' size={30} />
-                          <span className='h5 '>Report Symptom</span>
+                          <BsPlus className='icon' size={27} />
+                          <span className='h5'>Report Symptom</span>
                         </Button>
                       </LinkContainer>
                     </Card.Title>
@@ -147,8 +145,7 @@ export default function ListSymptom() {
                               symptomDate,
                               painLevel,
                               attachment,
-                              description,
-                              createdAt
+                              description
                             }) => (
                               <tr>
                                 <td>{symptomName}</td>
