@@ -69,15 +69,7 @@ export default function ListSymptom() {
       body: { painLevel }
     });
   }
-  const renderDetail = ({
-    symptomId,
-    symptomName,
-    symptomArea,
-    symptomDate,
-    attachment,
-    description,
-    createdAt
-  }) => (
+  const renderDetail = ({ attachment, description }) => (
     <Popover id='popover-basic'>
       <div className='container m-3'>
         <p>
@@ -201,13 +193,8 @@ export default function ListSymptom() {
                                   <OverlayTrigger
                                     placement='bottom'
                                     overlay={renderDetail({
-                                      symptomId,
-                                      symptomName,
-                                      symptomArea,
-                                      symptomDate,
                                       attachment,
-                                      description,
-                                      createdAt
+                                      description
                                     })}
                                   >
                                     <Button className='btn-primary btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'>
