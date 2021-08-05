@@ -177,19 +177,19 @@ export default function ListSymptom() {
                                       submitPainLevel(rate, symptomId);
                                       painLevel = rate;
                                       document.getElementById(
-                                        'pain-rating'
+                                        `pain-rating-${symptomId}`
                                       ).innerHTML = painLevelRate[rate - 1];
                                     }}
                                     onHover={(rate) =>
                                       (document.getElementById(
-                                        'pain-rating'
+                                        `pain-rating-${symptomId}`
                                       ).innerHTML =
                                         painLevelRate[rate - 1] ||
                                         painLevelRate[painLevel - 1])
                                     }
                                   />
                                   <div
-                                    id='pain-rating'
+                                    id={`pain-rating-${symptomId}`}
                                     className='current-rating-movie'
                                   >
                                     {painLevelRate[painLevel - 1]}
