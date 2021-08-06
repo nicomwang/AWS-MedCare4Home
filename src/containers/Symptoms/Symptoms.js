@@ -215,7 +215,7 @@ export default function Symptoms() {
                         }
                         fullSymbol={
                           <span className='theme-bar-movie'>
-                            <span className='theme-bar-movie-active' />
+                            <span className='theme-bar-movie-active pain-level-bar' />
                           </span>
                         }
                         onChange={(rate) => setPainLevel(rate)}
@@ -226,7 +226,7 @@ export default function Symptoms() {
                         }
                       />
                     </span>
-                    <span id='pain-rating' className='text-primary'>
+                    <span id='pain-rating' class='pain-level-label'>
                       {' '}
                       {painLevelRate[painLevel - 1]}
                     </span>
@@ -275,6 +275,7 @@ export default function Symptoms() {
                         className='m-md-2  m-sm-2 '
                         isLoading={isLoading}
                         disabled={!validateForm()}
+                        id='theme-color-primary'
                       >
                         <BsPencilSquare size={17} />
                         <span className='m-3'>Update</span>
@@ -288,6 +289,7 @@ export default function Symptoms() {
                         className='m-md-2  m-sm-2 '
                         onClick={handleDelete}
                         isLoading={isDeleting}
+                        id="theme-color-red" 
                       >
                         <BsTrash size={17} />
                         <span className='m-3'>Delete</span>

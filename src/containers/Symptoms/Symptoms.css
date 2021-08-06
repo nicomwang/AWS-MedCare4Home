@@ -3,15 +3,14 @@
   width: 30px;
   height: 8px;
   float: left;
-  background-color: #bbcefb;
   margin: 1px;
 }
+
 .theme-bar-movie-active {
   display: block;
   width: 30px;
   height: 8px;
   float: left;
-  background-color: #4278f5;
   margin: 1px;
 }
 
@@ -22,7 +21,6 @@
   font-weight: 600;
   display: block;
   padding: 0.5em 0;
-  color: #4278f5;
 }
 .current-rating-movie-update {
   clear: both;
@@ -31,8 +29,8 @@
   font-weight: 600;
   display: block;
   padding: 0.5em 0;
-  color: #4278f5;
 }
+
 .icon {
   vertical-align: center !important;
 }

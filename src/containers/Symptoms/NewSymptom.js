@@ -134,13 +134,13 @@ export default function NewSymptom() {
                       stop={6}
                       initialRating={painLevel}
                       emptySymbol={
-                        <span className='theme-bar-movie'>
+                        <span className='theme-bar-movie '>
                           <span />
                         </span>
                       }
                       fullSymbol={
                         <span className='theme-bar-movie'>
-                          <span className='theme-bar-movie-active' />
+                          <span className='theme-bar-movie-active pain-level-bar' />
                         </span>
                       }
                       onChange={(rate) => setPainLevel(rate)}
@@ -186,6 +186,7 @@ export default function NewSymptom() {
                   variant='primary'
                   isLoading={isLoading}
                   disabled={!validateForm()}
+                  id='theme-color-primary'
                 >
                   Create
                 </LoaderButton>

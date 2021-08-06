@@ -57,7 +57,7 @@ export default function NewDocument() {
     <div className='NewDocument mb-5'>
       <Row className=' m-4'>
         <Col xl={2} />
-        <Col xl={8}>
+        <Col xl={8} lg={8} >
           <Card>
             <Card.Header>
               <Card.Title>Add Document</Card.Title>
@@ -76,7 +76,7 @@ export default function NewDocument() {
                       Vision Presciption
                     </option>
                     <option value='Medication Presciption'>
-                      Medication Presciption
+                      Medical Presciption
                     </option>
                     <option value='Insurance'>Insurance Card</option>
                     <option value='Immunization Record'>
@@ -103,13 +103,13 @@ export default function NewDocument() {
                     type='file'
                   />
                 </Form.Group>
-                <LoaderButton
+                <LoaderButton 
                   block
                   type='submit'
                   size='lg'
-                  variant='primary'
                   isLoading={isLoading}
                   disabled={!validateForm()}
+                  id='theme-color-primary'
                 >
                   Create
                 </LoaderButton>

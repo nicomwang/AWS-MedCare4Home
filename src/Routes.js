@@ -13,8 +13,7 @@ import ListDocuments from "./containers/Documents/ListDocuments";
 import Symptoms from "./containers/Symptoms/Symptoms";
 import NewSymptom from "./containers/Symptoms/NewSymptom";
 import ListSymptoms from "./containers/Symptoms/ListSymptoms";
-import Settings from "./containers/Settings/Settings";
-import ChangePassword from "./containers/Settings/ChangePassword";
+import ChangePassword from "./containers/Account/ChangePassword";
 
 export default function Routes() {
   return (
@@ -39,9 +38,6 @@ export default function Routes() {
       </AuthenticatedRoute>
       <AuthenticatedRoute exact path="/documents/:id">
         <Documents />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/settings">
-        <Settings />
       </AuthenticatedRoute>
       <AuthenticatedRoute  exact path="/settings/password">
         <ChangePassword />

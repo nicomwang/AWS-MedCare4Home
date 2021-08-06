@@ -34,21 +34,21 @@ export default function Home() {
         <div className="service-cards">
           <Row>
             <Col md={12} lg={6} xl={6}>
-              <LinkContainer className="text-center" to="/documents/new">
+              <LinkContainer className="text-center" to="/documents">
                 <Card className=" home-card left-card mt-5">
                   <Card.Title className="mt-4 service">
                     <GoFile size={28} className="icon mr-1" /> Upload Medical
                     Documents
                   </Card.Title>
                   <Card.Body>
-                    Upload electronic file of your medical documents. <br />
+                    Upload electronic file of your medical documents.
                     It can be a scan or clear photo. Maximum file size: 5MB.
                   </Card.Body>
                 </Card>
               </LinkContainer>
             </Col>
             <Col md={12} lg={6} xl={6}>
-              <LinkContainer className="text-center" to="/symptoms/new">
+              <LinkContainer className="text-center" to="/symptoms">
                 <Card className="home-card right-card mt-5">
                   <Card.Title className="mt-4">
                     <GoReport size={28} className="mr-3" />

@@ -107,12 +107,13 @@ export default function ListSymptom() {
               <Col>
                 <Card>
                   <Card.Header>
-                    <Card.Title>
-                      Symptom List
+                    <Card.Title >
+                     Symptoms
                       <LinkContainer className='text-center theme-color-primary' to='/symptoms/new'>
                         <Button
                           action
-                          className=' font-weight-bold btn ml-4 float-right'
+                          className=' font-weight-bold btn ml-4 float-right symptom-table-btn'
+                          id="theme-color-primary" 
                         >
                           <BsPlus className='icon' size={27} />
                           <span className='h5'>Report Symptom</span>
@@ -155,7 +156,7 @@ export default function ListSymptom() {
                                     stop={6}
                                     initialRating={painLevel ? painLevel : 1}
                                     emptySymbol={
-                                      <span className='theme-bar-movie'>
+                                      <span className='theme-bar-movie' >
                                         <span />
                                       </span>
                                     }
@@ -186,7 +187,7 @@ export default function ListSymptom() {
                                   </div>
                                 </td>
                                 <td>{symptomDate}</td>
-                                <td className='d-flex justify-content-center'>
+                                <td className='d-flex justify-content-left'>
                                   <OverlayTrigger
                                     placement='bottom'
                                     overlay={renderDetail({
@@ -194,7 +195,7 @@ export default function ListSymptom() {
                                       description
                                     })}
                                   >
-                                    <Button className='btn-primary btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'>
+                                    <Button className='btn-secondary btn-small rounded-circle btn-icons btn-rounded mx-2 float-right'>
                                       <BsList size={17} />
                                     </Button>
                                   </OverlayTrigger>

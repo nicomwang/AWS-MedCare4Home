@@ -37,7 +37,7 @@ export default function ChangePassword() {
         fields.password
       );
 
-      history.push("/settings");
+      history.push("/");
     } catch (error) {
       onError(error);
       setIsChanging(false);
@@ -79,6 +79,7 @@ export default function ChangePassword() {
           bsSize="large"
           disabled={!validateForm()}
           isLoading={isChanging}
+          id="theme-color-primary" 
         >
           Change Password
         </LoaderButton>

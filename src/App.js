@@ -58,7 +58,7 @@ function App() {
                   <LinkContainer to='/symptoms'>
                     <Nav.Link>Symptoms</Nav.Link>
                   </LinkContainer>
-                  <NavDropdown title='Account' id='nav-dropdown'>
+                  <NavDropdown title='Account' id='nav-dropdown' >
                     <LinkContainer to='/settings/password'>
                       <NavDropdown.Item eventKey='4.1'>
                         Change Password

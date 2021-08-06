@@ -45,7 +45,7 @@ export default function ListDocument() {
         <Row>
           <Col className=''>
             <div className='row text-center'>
-              <LinkContainer className='text-center theme-color-primary' to='/documents/new'>
+              <LinkContainer id='theme-color-primary' className='text-center button' to='/documents/new'>
                 <ListGroup.Item
                   action
                   className=' font-weight-bold py-auto m-4 text-white'

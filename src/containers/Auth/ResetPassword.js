@@ -86,6 +86,7 @@ export default function ResetPassword() {
           bsSize="large"
           isLoading={isSendingCode}
           disabled={!validateCodeForm()}
+          id="theme-color-primary" 
         >
           Send Confirmation
         </LoaderButton>
@@ -131,6 +132,7 @@ export default function ResetPassword() {
           bsSize="large"
           isLoading={isConfirming}
           disabled={!validateResetForm()}
+          id="theme-color-primary" 
         >
           Confirm
         </LoaderButton>

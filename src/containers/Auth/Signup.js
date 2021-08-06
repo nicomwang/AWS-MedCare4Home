@@ -84,6 +84,7 @@ export default function Signup() {
           variant="success"
           isLoading={isLoading}
           disabled={!validateConfirmationForm()}
+          id="theme-color-green" 
         >
           Verify
         </LoaderButton>
@@ -126,6 +127,7 @@ export default function Signup() {
           variant="success"
           isLoading={isLoading}
           disabled={!validateForm()}
+          id="theme-color-green" 
         >
           Signup
         </LoaderButton>
