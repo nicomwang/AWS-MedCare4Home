@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -10,7 +10,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -19,11 +19,16 @@ textarea.form-control,
 input.form-control {
   font-size: 1rem;
 }
-input[type=file] {
+input[type="file"] {
   width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "PT Serif", serif;
 }
 
@@ -40,50 +45,67 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pain-level-bar {
-  margin:0 !important;
+  margin: 0 !important;
 }
 
 /* theme colors */
-#theme-color-primary, .dropdown-item:active, .dropdown-item.active{
-  color:#ffffff;
-  background-color:#466F97 !important;
-  border-color: #466F97 !important;
+#theme-color-primary,
+.dropdown-item:active,
+.dropdown-item.active {
+  color: #ffffff;
+  background-color: #466f97 !important;
+  border-color: #466f97 !important;
 }
 
-#theme-color-primary:hover{
-  background-color:#3f6386 !important;
+#theme-color-primary:hover {
+  background-color: #3f6386 !important;
   border-color: #3f6386 !important;
 }
 
-#theme-color-secondary, .theme-bar-movie-active{
-  background-color:#5981b1 !important;
+#theme-color-secondary,
+.theme-bar-movie-active {
+  background-color: #5981b1 !important;
   border-color: #5981b1 !important;
 }
 
-#theme-color-light, .theme-bar-movie{
-  background-color:#C7D3DF !important;
-  border-color: #C7D3DF !important;
+#theme-color-light,
+.theme-bar-movie {
+  background-color: #c7d3df !important;
+  border-color: #c7d3df !important;
 }
 
-#theme-color-green{
-  background-color:#549675 !important;
+#theme-color-green {
+  background-color: #549675 !important;
   border-color: #549675 !important;
 }
-#theme-color-green:hover{
-  background-color:#4d896b !important;
+#theme-color-green:hover {
+  background-color: #4d896b !important;
   border-color: #4d896b !important;
 }
 
-#theme-color-red{
-  background-color:#b95d5d  !important;
-  border-color: #b95d5d  !important;
+#theme-color-red {
+  background-color: #b95d5d !important;
+  border-color: #b95d5d !important;
 }
 
-#theme-color-red:hover{
-  background-color:#a65353 !important;
+#theme-color-red:hover {
+  background-color: #a65353 !important;
   border-color: #a65353 !important;
 }
 
-.pain-level-label,.current-rating-movie, .current-rating-movie-update {
-  color:#50749F !important;
+.pain-level-label,
+.current-rating-movie,
+.current-rating-movie-update {
+  color: #50749f !important;
 }
+
+@media (max-width: 576px) {
+  .btn-xs{
+    margin-top: 0.5rem !important;
+  }
+
+  .service-title {
+    font-size: 1.5rem;
+  }
+}
+

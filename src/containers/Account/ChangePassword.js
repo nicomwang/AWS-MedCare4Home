@@ -73,7 +73,6 @@ export default function ChangePassword() {
           />
         </FormGroup>
         <LoaderButton
-          id="btn"
           block
           type="submit"
           bsSize="large"

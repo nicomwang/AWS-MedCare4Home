@@ -72,11 +72,11 @@ export default function NewDocument() {
                     onChange={(e) => setFileName(e.target.value)}
                   >
                     <option value='Vaccine Card'>Vaccine Card</option>
-                    <option value='Vision Presciption'>
-                      Vision Presciption
+                    <option value='Vision Prescription'>
+                      Vision Prescription
                     </option>
-                    <option value='Medication Presciption'>
-                      Medical Presciption
+                    <option value='Medical Prescription'>
+                      Medical Prescription
                     </option>
                     <option value='Insurance'>Insurance Card</option>
                     <option value='Immunization Record'>

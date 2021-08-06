@@ -139,11 +139,11 @@ export default function Documents() {
                       onChange={(e) => setFileName(e.target.value)}
                     >
                       <option value='Vaccine Card'>Vaccine Card</option>
-                      <option value='Vision Presciption'>
-                        Vision Presciption
+                      <option value='Vision Prescription'>
+                        Vision Prescription
                       </option>
-                      <option value='Medication Presciption'>
-                        Medication Presciption
+                      <option value='Medical Prescription'>
+                        Medical Prescription
                       </option>
                       <option value='Insurance'>Insurance</option>
                       <option value='Immunization Record'>
@@ -201,7 +201,7 @@ export default function Documents() {
                         block
                         size='lg'
                         variant='danger'
-                        className='m-md-2 m-sm-2 '
+                        className='m-md-2 m-sm-2 btn-xs '
                         onClick={handleDelete}
                         isLoading={isDeleting}
                         id="theme-color-red" 

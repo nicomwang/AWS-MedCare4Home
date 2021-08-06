@@ -149,7 +149,7 @@ export default function ListDocument() {
   return (
     <div className='documents'>
       <br />
-      <span className='pb-3 m-3 h2 text-center'> Your Health Documents</span>
+      <span className='pb-3 m-3 h2 text-center service-title'> Medical Documents</span>
       <hr />
       <ListGroup>{!isLoading && renderDocumentsList(documents)}</ListGroup>
     </div>

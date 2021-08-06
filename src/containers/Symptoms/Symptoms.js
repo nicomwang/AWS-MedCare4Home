@@ -33,7 +33,7 @@ export default function Symptoms() {
     'Moderate',
     'Severe',
     'Very Severe',
-    'Worst Pain Possile'
+    'Worst Pain Possible'
   ];
   useEffect(() => {
     function loadSymptom() {
@@ -272,7 +272,7 @@ export default function Symptoms() {
                         block
                         size='lg'
                         type='submit'
-                        className='m-md-2  m-sm-2 '
+                        className='m-md-2 m-xs-2 m-sm-2 '
                         isLoading={isLoading}
                         disabled={!validateForm()}
                         id='theme-color-primary'
@@ -286,7 +286,7 @@ export default function Symptoms() {
                         block
                         size='lg'
                         variant='danger'
-                        className='m-md-2  m-sm-2 '
+                        className='m-md-2 btn-xs m-sm-2 '
                         onClick={handleDelete}
                         isLoading={isDeleting}
                         id="theme-color-red" 

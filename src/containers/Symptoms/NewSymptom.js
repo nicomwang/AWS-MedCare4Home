@@ -28,7 +28,7 @@ export default function NewSymptom() {
     'Moderate',
     'Severe',
     'Very Severe',
-    'Worst Pain Possile'
+    'Worst Pain Possible'
   ];
   function validateForm() {
     return symptomName.length > 0;
@@ -151,7 +151,7 @@ export default function NewSymptom() {
                       }
                     />
                   </span>
-                  <span id='pain-rating' className=' text-primary'>
+                  <span id='pain-rating' class='pain-level-label '>
                     {' '}
                     {painLevelRate[painLevel - 1]}
                   </span>

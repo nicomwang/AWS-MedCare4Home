@@ -35,7 +35,7 @@ export default function Home() {
           <Row>
             <Col md={12} lg={6} xl={6}>
               <LinkContainer className="text-center" to="/documents">
-                <Card className=" home-card left-card mt-5">
+                <Card className=" home-card left-card mt-5 link-card">
                   <Card.Title className="mt-4 service">
                     <GoFile size={28} className="icon mr-1" /> Upload Medical
                     Documents
@@ -49,7 +49,7 @@ export default function Home() {
             </Col>
             <Col md={12} lg={6} xl={6}>
               <LinkContainer className="text-center" to="/symptoms">
-                <Card className="home-card right-card mt-5">
+                <Card className="home-card right-card mt-5 link-card">
                   <Card.Title className="mt-4">
                     <GoReport size={28} className="mr-3" />
                     Report Symptom

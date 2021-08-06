@@ -33,7 +33,7 @@ export default function ListSymptom() {
     'Moderate',
     'Severe',
     'Very Severe',
-    'Worst Pain Possile'
+    'Worst Pain Possible'
   ];
   useEffect(() => {
     async function onLoad() {
@@ -108,7 +108,6 @@ export default function ListSymptom() {
                 <Card>
                   <Card.Header>
                     <Card.Title >
-                     Symptoms
                       <LinkContainer className='text-center theme-color-primary' to='/symptoms/new'>
                         <Button
                           action
@@ -235,7 +234,7 @@ export default function ListSymptom() {
   return (
     <div className='symptoms'>
       <br />
-      <span className='pb-3 m-3 h2 text-center'> Your Health Symptoms</span>
+      <span className='pb-3 m-3 h2 text-center service-tittle'> Your Symptoms</span>
       <hr />
       <ListGroup>{!isLoading && renderSymptomsList(symptoms)}</ListGroup>
     </div>
