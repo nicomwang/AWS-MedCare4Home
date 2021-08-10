@@ -15,7 +15,7 @@ export default function Home() {
     return (
       <div className="lander m-0">
         <h1 className="title">
-          Manage Healthcare For You and Your Family On the Go.
+          Manage Your Healthcare Data <br/> - Any Device, Anytime, Anywhere.
         </h1>
         <h3 className="subtitle">
           MedCare4Home is a cloud solution to manage your healthcare data easily

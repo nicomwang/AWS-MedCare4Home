@@ -75,10 +75,11 @@
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .title {
-    font-size: 54px;
-    line-height: 64px;
+    font-size: 43px;
+    line-height: 52px;
     margin-left: 5%;
-    margin-right: 55%;
+    margin-right: 57%;
+    margin-top: 5%;
   }
 
   .subtitle {
@@ -98,10 +99,11 @@
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .title {
-    font-size: 54px;
-    line-height: 64px;
+    font-size: 40px;
+    line-height: 48px;
     margin-left: 5%;
     margin-right: 50%;
+    margin-top: 5%;
   }
 
   .subtitle {
