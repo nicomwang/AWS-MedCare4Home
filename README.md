@@ -1,70 +1,125 @@
-# Getting Started with Create React App
+# MedCare4Home
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://www.medcare4home.com/
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+Managing healthcare data is essential for everyone, but it can be challenging and time-consuming. MedCare4Home is an easy-to-use cloud solution to manage healthcare data. With our application, users can seamlessly locate their medical documents from different resources. We also provide them with the ability to self-report ongoing symptoms that might be necessary to track before the next doctor's appointment. In the future, we consider expanding our project to allow users to manage data for multiple family members within one account and set up personalized medication reminders. 
 
-### `npm start`
+## Features
+1. Registration
+2. Login/Logout
+3. Update/Reset password
+4. Upload Medical Documents
+5. Self-report sysmptoms
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## System Architecture
+![System Architecture](https://github.com/wangm1atwit/AWS-MedCare4Home/blob/main/image/System%20Architecture.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Deployment
+1. Install Dependencies in both ```AWS-MedCare4Home``` and ```AWS-MedCare4Home/api``` directory, run:
+      ```
+      $ npm install
+      ```
+2. Create an aws account and an IAM user. Write down the __user access key ID__ and __the secret access key__.
+3. Install and configure AWS CLI  
+      - Using pip on Linux, macOS, or Unix:
+      ```
+      $ sudo pip install awscli
+      ```
+      - or using Homebrew on macOS:
+      ```
+      $ brew install awscli
+      ```
+      - configure using your Secret Key ID and your Access Key:
+      ```
+      $ aws configure
+      ```
+4. Install serverless framework
+      ```
+      npm install serverless -g
+      ```
+5. Create two DynamoDB tables using the [AWS Console](https://aws.amazon.com/console/).
+      - Create a table named ```documents``` with ```userId``` as the partition key and ```documentId``` as the sorted key. 
+      - Similarly, create a ```symptoms``` table with have ```userId``` as the partition key and ```symptomId``` as the sorted key.
 
-### `npm test`
+6. Create a S3 bucket using the [AWS Console](https://aws.amazon.com/console/). 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+7. Create Cognito user pool
+      - Create user pool
+         - Select Manage your User Pools -> Select Create a User Pool -> Select Review defaults (for username attributes, make sure to select Email address or phone numbers and Allow email addresses)  
+         - Take a note of the __Pool Id__ and __Pool ARN__ which will be required later. 
+      - Create App Client
+        - Select App Clients under General Settings on the left panel -> Select Add an app client -> Enter App client name, un-select Generate client secret, select Enable sign-in API for server-based authentication -> select Create app client.
+        - Take note of the __App client id__ which will be required later.
+      - Create Domain Name
+        -  select Domain name from the left panel. Enter your unique domain name and select Save changes. 
+8. Create Cognito Identity Pool
+     - Select ManageFederated Identities -> Enter an Identity pool name, Select Authentication providers. Under Cognito tab, enter __User Pool ID__ and __App Client ID__ of the User Pool you just created -> Select Create Pool.
+     - Select View Details -> Select View Policy Document in the top section -> Select Edit and Ok to edit -> Add the following policy into editor (make sure to replace the indicated values with your own) -> Select Allow -> Take a note of the __Identity pool ID__. 
+         ```
+                  {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "mobileanalytics:PutEvents",
+                  "cognito-sync:*",
+                  "cognito-identity:*"
+                ],
+                "Resource": [
+                  "*"
+                ]
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "s3:*"
+                ],
+                "Resource": [
+                  "arn:aws:s3:::REPLACE_ME_YOUR_S3_UPLOADS_BUCKET_NAME/private/${cognito-identity.amazonaws.com:sub}/*"
+                ]
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "execute-api:Invoke"
+                ],
+                "Resource": [
+                  "arn:aws:execute-api:REPLACE_ME_YOUR_API_GATEWAY_REGION:*:REPLACE_ME_YOUR_API_GATEWAY_ID/*/*/*"
+                ]
+              }
+            ]
+          }
+        ```
+9. Deploy the APIs. Run the following in AWS-MedCare4Home/api directory.
+      ```
+      $ serverless deploy
+      ```
+10. Configure AWS Amplify
+      - Install AWS Amplify
+      ```
+      $ npm install aws-amplify --save
+      ```   
+      - Modify ```src/config.js```, replace all values with your own.
+      - Host the application on Amplify by following [this documentation](https://aws.amazon.com/getting-started/hands-on/host-static-website/)
 
-### `npm run build`
+11. To run and test the code locally, run the following command in the root dirctory:
+      ```
+      $ npm start
+      ```   
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Demo video
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## References
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Tutorial: https://serverless-stack.com/#guide
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Team members
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Mengting Wang (wangm1@wit.edu): Team Lead, Backend dev
+* Yen Le (ley@wit.edu): Frontend dev, UI design
