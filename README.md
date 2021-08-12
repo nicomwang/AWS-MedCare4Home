@@ -17,7 +17,8 @@ Managing healthcare data is essential for everyone, but it can be challenging an
 ![System Architecture](https://github.com/wangm1atwit/AWS-MedCare4Home/blob/main/image/System%20Architecture.png)
 
 ## Deployment
-1. Install Dependencies in both ```AWS-MedCare4Home``` and ```AWS-MedCare4Home/api``` directory, run:
+1. Clone frontend (this one) and [backend](https://github.com/wangm1atwit/AWS-MedCare4Home-API) repositories.    
+      Install dependencies in both root directories:
       ```
       $ npm install
       ```
@@ -44,8 +45,12 @@ Managing healthcare data is essential for everyone, but it can be challenging an
       - Similarly, create a ```symptoms``` table with have ```userId``` as the partition key and ```symptomId``` as the sorted key.
 
 6. Create a S3 bucket using the [AWS Console](https://aws.amazon.com/console/). 
+7. Deploy the APIs. Run the following in AWS-MedCare4Home-API repo's directory.
+      ```
+      $ serverless deploy
+      ```
 
-7. Create Cognito user pool
+8. Create Cognito user pool
       - Create user pool
          - Select Manage your User Pools -> Select Create a User Pool -> Select Review defaults (for username attributes, make sure to select Email address or phone numbers and Allow email addresses)  
          - Take a note of the __Pool Id__ and __Pool ARN__ which will be required later. 
@@ -54,7 +59,7 @@ Managing healthcare data is essential for everyone, but it can be challenging an
         - Take note of the __App client id__ which will be required later.
       - Create Domain Name
         -  select Domain name from the left panel. Enter your unique domain name and select Save changes. 
-8. Create Cognito Identity Pool
+9. Create Cognito Identity Pool
      - Select ManageFederated Identities -> Enter an Identity pool name, Select Authentication providers. Under Cognito tab, enter __User Pool ID__ and __App Client ID__ of the User Pool you just created -> Select Create Pool.
      - Select View Details -> Select View Policy Document in the top section -> Select Edit and Ok to edit -> Add the following policy into editor (make sure to replace the indicated values with your own) -> Select Allow -> Take a note of the __Identity pool ID__. 
          ```
@@ -93,10 +98,6 @@ Managing healthcare data is essential for everyone, but it can be challenging an
             ]
           }
         ```
-9. Deploy the APIs. Run the following in AWS-MedCare4Home/api directory.
-      ```
-      $ serverless deploy
-      ```
 10. Configure AWS Amplify
       - Install AWS Amplify
       ```
@@ -113,7 +114,7 @@ Managing healthcare data is essential for everyone, but it can be challenging an
 
 ## Demo video
 
-
+https://www.youtube.com/watch?v=TlzJQrBWnOM
 
 ## References
 
