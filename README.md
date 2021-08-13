@@ -17,8 +17,7 @@ Managing healthcare data is essential for everyone, but it can be challenging an
 ![System Architecture](https://github.com/wangm1atwit/AWS-MedCare4Home/blob/main/image/System%20Architecture.png)
 
 ## Deployment
-1. Clone frontend (this one) and [backend](https://github.com/wangm1atwit/AWS-MedCare4Home-API) repositories.    
-      Install dependencies in both root directories:
+1. Install dependencies in the ```root``` directory and ```/API``` directory:
       ```
       $ npm install
       ```
@@ -45,7 +44,7 @@ Managing healthcare data is essential for everyone, but it can be challenging an
       - Similarly, create a ```symptoms``` table with have ```userId``` as the partition key and ```symptomId``` as the sorted key.
 
 6. Create a S3 bucket using the [AWS Console](https://aws.amazon.com/console/). 
-7. Deploy the APIs. Run the following in AWS-MedCare4Home-API repo's directory.
+7. Deploy the APIs. Run the following in ```/API``` directory.
       ```
       $ serverless deploy
       ```
