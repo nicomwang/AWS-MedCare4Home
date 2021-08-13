@@ -1,0 +1,171 @@
+# NOTE: update this with your service name
+service: hmc-api
+
+configValidationMode: error # Modes for config validation. `error` throws an exception
+variablesResolutionMode: "20210326" # To crash on variable resolution errors
+
+# Disable deprecation logs by their codes. Default is empty.
+disabledDeprecations: 
+  - DEP_CODE_1 # Deprecation code to disable
+
+# Create an optimized package for our functions 
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-dotenv-plugin # Load .env as environment variables
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: us-east-1
+  lambdaHashingVersion: "20201221" 
+
+  # These environment variables are made available to our functions
+  # under process.env.
+  environment:
+    tableName: documents
+    tableName1: users
+    tableName2: symptoms
+
+  # 'iam.role.statements' defines the permission policy for the Lambda function.
+  # In this case Lambda functions are granted with permissions to access DynamoDB.
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+
+functions:
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # - path: url path is /documents
+  # - method: POST request
+  createDocument:
+    handler: createDocument.main
+    events:
+      - http:
+          path: documents
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  createSymptom:
+    handler: createSymptom.main
+    events:
+      - http:
+          path: symptoms
+          method: post
+          cors: true
+          authorizer: aws_iam
+  
+  getDocument:
+    # Defines an HTTP API endpoint that calls the main function in get.js
+    # - path: url path is /documents/{id}
+    # - method: GET request
+    handler: getDocument.main
+    events:
+      - http:
+          path: documents/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+  
+  getSymptom:
+    handler: getSymptom.main
+    events:
+      - http:
+          path: symptoms/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  listDocument:
+    # Defines an HTTP API endpoint that calls the main function in list.js
+    # - path: url path is /documents
+    # - method: GET request
+    handler: listDocument.main
+    events:
+      - http:
+          path: documents
+          method: get
+          cors: true
+          authorizer: aws_iam
+  
+  listSymptom:
+    handler: listSymptom.main
+    events:
+      - http:
+          path: symptoms
+          method: get
+          cors: true
+          authorizer: aws_iam
+  
+  updateDocument:
+    # Defines an HTTP API endpoint that calls the main function in update.js
+    # - path: url path is /documents/{id}
+    # - method: PUT request
+    handler: updateDocument.main
+    events:
+      - http:
+          path: documents/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
+  
+  updateSymptom:
+    # Defines an HTTP API endpoint that calls the main function in update.js
+    # - path: url path is /symptoms/{id}
+    # - method: PUT request
+    handler: updateSymptom.main
+    events:
+      - http:
+          path: symptoms/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
+  
+  updatePainlevel:
+    # Defines an HTTP API endpoint that calls the main function in update.js
+    # - path: url path is /symptoms/painlevel/{id}
+    # - method: PUT request
+    handler: updatePainlevel.main
+    events:
+      - http:
+          path: symptoms/painlevel/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
+
+  deleteDocument:
+    # Defines an HTTP API endpoint that calls the main function in delete.js
+    # - path: url path is /documents/{id}
+    # - method: DELETE request
+    handler: deleteDocument.main
+    events:
+      - http:
+          path: documents/{id}
+          method: delete
+          cors: true
+          authorizer: aws_iam
+  
+  deleteSymptom:
+    handler: deleteSymptom.main
+    events:
+      - http:
+          path: symptoms/{id}
+          method: delete
+          cors: true
+          authorizer: aws_iam
+
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}

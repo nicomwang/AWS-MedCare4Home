@@ -1,0 +1,11 @@
+{
+    "body": "{\"painLevel\":\"999\"}",
+    "pathParameters": {
+      "id": "e44befc0-f48d-11eb-881c-e33e3605103e"
+    },
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1234"
+      }
+    }
+  }

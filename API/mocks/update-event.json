@@ -1,0 +1,11 @@
+{
+    "body": "{\"symptomName\":\"new\",\"symotomArea\":\"new\",\"description\":\"new\",\"painLevel\":\"1\",\"symptomDate\":\"08/01/2021\",\"attachment\":\"new.jpg\"}",
+    "pathParameters": {
+      "id": "e44befc0-f48d-11eb-881c-e33e3605103e"
+    },
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1234"
+      }
+    }
+  }

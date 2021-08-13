@@ -1,0 +1,8 @@
+{
+  "body": "{\"symptomName\":\"cat scratches\",\"symotomArea\":\"hand\",\"description\":\"des\",\"painLevel\":\"10\",\"symptomDate\":\"08/01/2021\",\"attachment\":\"burn.jpg\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}
